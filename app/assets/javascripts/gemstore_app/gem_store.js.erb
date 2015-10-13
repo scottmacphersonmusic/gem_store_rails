@@ -1,10 +1,12 @@
+//= require gemstore_app/products
+
 (function() {
-  var app = angular.module('gemStore', ['store-directives', 'templates']);
+  var app = angular.module('gemStore', ['store-directives']);
 
   app.controller('StoreController', [ '$http', function($http){
     var store = this;
     store.products = [];
-    $http.get("<%= asset_path 'store-products.json' %>").success(function(data){
+    $http.get("<%= asset_path 'gemstore_app/store-products.json' %>").success(function(data){
       store.products = data;
     });
   } ]);
