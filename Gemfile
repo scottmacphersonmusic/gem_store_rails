@@ -1,5 +1,7 @@
 source 'https://rubygems.org'
 
+ruby "2.2.3"
+
 gem 'coffee-rails', '~> 4.1.0'
 gem 'jbuilder', '~> 2.0'
 gem 'jquery-rails'
@@ -16,4 +18,9 @@ end
 group :development do
   gem 'spring'
   gem 'web-console', '~> 2.0'
+end
+
+group :production do
+  gem 'rails_12factor'
+  gem 'pg'
 end
