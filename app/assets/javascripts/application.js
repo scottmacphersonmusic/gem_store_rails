@@ -12,6 +12,7 @@
 //
 //= require jquery
 //= require jquery_ujs
-//= require turbolinks
-//= require_tree ../../../vendor/assets/javascripts/.
+//= require angular
+//= require angular-rails-templates
+//= require_tree ./templates
 //= require_tree .
