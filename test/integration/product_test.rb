@@ -22,10 +22,10 @@ class ProductTest < ActionDispatch::IntegrationTest
 
   test "post request to '/products' creates a new product" do
     post '/products',
-         { name: 'Diamond',
+         { product: { name: 'Diamond',
            price: 300.00,
            description: 'A real nice rock'
-         }.to_json,
+         } }.to_json,
          { 'Accept' => Mime::JSON, 'Content-Type' => Mime::JSON.to_s }
 
     assert_equal 201, response.status
@@ -38,10 +38,10 @@ class ProductTest < ActionDispatch::IntegrationTest
 
   test "creating a product requires at least a name and price" do
     post '/products',
-         { title: nil,
+         { product: { title: nil,
            price: nil,
            description: 'You can only imagine!'
-         }.to_json,
+         } }.to_json,
          { 'Accept' => Mime::JSON, 'Content-Type' => Mime::JSON.to_s }
 
     assert_equal 422, response.status
@@ -50,5 +50,15 @@ class ProductTest < ActionDispatch::IntegrationTest
     errors = json(response.body)
     assert_equal "can't be blank", errors[:name][0]
     assert_equal "can't be blank", errors[:price][0]
+  end
+
+  test "patch request to product endpoint updates product" do
+    ruby = Product.find_by(name: 'Ruby')
+    patch "/products/#{ruby.id}",
+          { product: { price: 80.00 } }.to_json,
+          { 'Accept' => Mime::JSON, 'Content-Type' => Mime::JSON.to_json }
+
+    assert_equal 200, response.status
+    assert_equal 80.00, product.reload.price
   end
 end

@@ -18,6 +18,14 @@ class ProductsController < ApplicationController
     end
   end
 
+  def update
+    product = Product.find(params[:id])
+    puts params.inspect
+    if product.update_attributes(product_params)
+      render json: product, status: 200
+    end
+  end
+
   private
 
   def product_params
