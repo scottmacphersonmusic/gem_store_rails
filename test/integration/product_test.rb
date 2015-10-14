@@ -33,5 +33,22 @@ class ProductTest < ActionDispatch::IntegrationTest
 
     product = json(response.body)
     assert_equal 'Diamond', product[:data][:attributes][:name]
+    assert_equal product_url(product[:data][:id]), response.location
+  end
+
+  test "creating a product requires at least a name and price" do
+    post '/products',
+         { title: nil,
+           price: nil,
+           description: 'You can only imagine!'
+         }.to_json,
+         { 'Accept' => Mime::JSON, 'Content-Type' => Mime::JSON.to_s }
+
+    assert_equal 422, response.status
+    assert_equal Mime::JSON, response.content_type
+
+    errors = json(response.body)
+    assert_equal "can't be blank", errors[:name][0]
+    assert_equal "can't be blank", errors[:price][0]
   end
 end
