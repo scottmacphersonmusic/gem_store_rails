@@ -19,4 +19,19 @@ class ProductTest < ActionDispatch::IntegrationTest
     product = json(response.body)
     assert_equal 'Green', product[:data][:attributes][:color]
   end
+
+  test "post request to '/products' creates a new product" do
+    post '/products',
+         { name: 'Diamond',
+           price: 300.00,
+           description: 'A real nice rock'
+         }.to_json,
+         { 'Accept' => Mime::JSON, 'Content-Type' => Mime::JSON.to_s }
+
+    assert_equal 201, response.status
+    assert_equal Mime::JSON, response.content_type
+
+    product = json(response.body)
+    assert_equal 'Diamond', product[:data][:attributes][:name]
+  end
 end
