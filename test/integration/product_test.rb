@@ -53,12 +53,21 @@ class ProductTest < ActionDispatch::IntegrationTest
   end
 
   test "patch request to product endpoint updates product" do
-    ruby = Product.find_by(name: 'Ruby')
-    patch "/products/#{ruby.id}",
-          { product: { price: 80.00 } }.to_json,
+    ruby = products(:ruby)
+    patch "/products/#{ruby.id}?product[price]=80.00", {},
           { 'Accept' => Mime::JSON, 'Content-Type' => Mime::JSON.to_json }
 
     assert_equal 200, response.status
-    assert_equal 80.00, product.reload.price
+    assert_equal 80.00, ruby.reload.price
+  end
+
+  test "patch request won't update with invalid data" do
+    ruby = products(:ruby)
+    patch "/products/#{ruby.id}?product[name]=", {},
+          { 'Accept' => Mime::JSON, 'Content-Type' => Mime::JSON.to_json }
+
+    assert_equal 422, response.status
+    errors = json(response.body)
+    assert_equal "can't be blank", errors[:name][0]
   end
 end
