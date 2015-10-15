@@ -1,0 +1,24 @@
+ruby_1:
+  stars: 4
+  author: thedude@leboswki.com
+  body: That gem really ties the room together, man
+  product: ruby
+
+ruby_2:
+  stars: 1
+  author: hater@example.com
+  body: This is not the kind of gem I wanted!
+  product: ruby
+
+emerald_1:
+  stars: 5
+  author: barry-o@whitehouse.gov
+  body: Top rate!
+  product: emerald
+
+
+emerald_2:
+  stars: 3
+  author: kanye@west.com
+  body: I\'ve seen better
+  product: emerald
