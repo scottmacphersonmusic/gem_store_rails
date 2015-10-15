@@ -25,4 +25,18 @@ class ReviewTest < ActionDispatch::IntegrationTest
     assert_equal 'That gem really tied the room together, man',
                  review[:data][:attributes][:body]
   end
+
+  test "post request creates a new product review" do
+    post "/products/#{@product.id}/reviews",
+         { review: { stars: 1,
+                     author: 'diamondjoebiden@aol.com',
+                     body: 'Abysmal'} }.to_json,
+         { 'Accept' => Mime::JSON, 'Content-Type' => Mime::JSON.to_s }
+
+    assert_equal 201, response.status
+    assert_equal Mime::JSON, response.content_type
+
+    review = json(response.body)
+    assert_equal 'Abysmal', review[:data][:attributes][:body]
+  end
 end
