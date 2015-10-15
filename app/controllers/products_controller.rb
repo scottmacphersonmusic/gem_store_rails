@@ -1,12 +1,13 @@
 class ProductsController < ApplicationController
+  before_action :set_product, only: [:show, :update, :destroy]
+
   def index
     products = Product.all
     render json: products, status: 200
   end
 
   def show
-    product = Product.find(params[:id])
-    render json: product, status: 200
+    render json: @product, status: 200
   end
 
   def create
@@ -19,17 +20,15 @@ class ProductsController < ApplicationController
   end
 
   def update
-    product = Product.find(params[:id])
-    if product.update_attributes(product_params)
-      render json: product, status: 200
+    if @product.update_attributes(product_params)
+      render json: @product, status: 200
     else
-      render json: product.errors, status: 422
+      render json: @product.errors, status: 422
     end
   end
 
   def destroy
-    product = Product.find(params[:id])
-    product.destroy
+    @product.destroy
     head 204
   end
 
@@ -44,5 +43,9 @@ class ProductsController < ApplicationController
                   :rarity,
                   :color,
                   :faces)
+  end
+
+  def set_product
+    @product = Product.find(params[:id])
   end
 end

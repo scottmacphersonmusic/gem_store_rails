@@ -1,12 +1,13 @@
 class ReviewsController < ApplicationController
+  before_action :set_review, only: [:show, :update, :destroy]
+
   def index
     reviews = Review.where(product_id: params[:product_id])
     render json: reviews, status: 200
   end
 
   def show
-    review = Review.find(params[:id])
-    render json: review, status: 200
+    render json: @review, status: 200
   end
 
   def create
@@ -20,17 +21,15 @@ class ReviewsController < ApplicationController
   end
 
   def update
-    review = Review.find(params[:id])
-    if review.update_attributes(review_params)
-      render json: review, status: 200
+    if @review.update_attributes(review_params)
+      render json: @review, status: 200
     else
-      render json: review.errors, status: 422
+      render json: @review.errors, status: 422
     end
   end
 
   def destroy
-    review = Review.find(params[:id])
-    review.destroy
+    @review.destroy
     head 204
   end
 
@@ -38,5 +37,9 @@ class ReviewsController < ApplicationController
 
   def review_params
     params.require(:review).permit(:stars, :author, :body)
+  end
+
+  def set_review
+    @review = Review.find(params[:id])
   end
 end
