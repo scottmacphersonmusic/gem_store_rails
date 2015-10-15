@@ -1,0 +1,15 @@
+ruby:
+  name: Ruby
+  description: The one case in a rails app where we arent talking about a language...
+  price: 77.77
+  rarity: 3
+  color: Red
+  faces: 13
+
+emerald:
+  name: Emerald
+  description: Seattle\'s gem!
+  price: 45.99
+  rarity: 6
+  color: Green
+  faces: 21
