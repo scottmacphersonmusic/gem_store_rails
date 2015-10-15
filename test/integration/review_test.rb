@@ -56,4 +56,23 @@ class ReviewTest < ActionDispatch::IntegrationTest
     assert_equal "can't be blank", errors[:author][0]
     assert_equal "can't be blank", errors[:body][0]
   end
+
+  test "patch request to review endpoint updates review" do
+    review = reviews(:ruby_1)
+    patch "/products/#{review.product_id}/reviews/#{review.id}?review[stars]=5", {},
+          { 'Accept' => Mime::JSON, 'Content-Type' => Mime::JSON.to_json }
+
+    assert_equal 200, response.status
+    assert_equal 5, review.reload.stars
+  end
+
+  test "patch request won't update with invalid data" do
+    review = reviews(:ruby_1)
+    patch "/products/#{review.product_id}/reviews/#{review.id}?review[stars]=", {},
+          { 'Accept' => Mime::JSON, 'Content-Type' => Mime::JSON.to_json }
+
+    assert_equal 422, response.status
+    errors = json(response.body)
+    assert_equal "can't be blank", errors[:stars][0]
+  end
 end
