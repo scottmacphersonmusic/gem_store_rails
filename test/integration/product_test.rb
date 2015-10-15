@@ -70,4 +70,11 @@ class ProductTest < ActionDispatch::IntegrationTest
     errors = json(response.body)
     assert_equal "can't be blank", errors[:name][0]
   end
+
+  test "deletes existing product" do
+    emerald = products(:emerald)
+    delete "/products/#{emerald.id}"
+    assert_equal 204, response.status
+    assert_empty Product.where(id: emerald.id)
+  end
 end
