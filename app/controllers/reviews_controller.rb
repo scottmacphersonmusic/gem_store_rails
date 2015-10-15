@@ -14,6 +14,8 @@ class ReviewsController < ApplicationController
     review = product.reviews.build(review_params)
     if review.save
       render json: review, status: 201
+    else
+      render json: review.errors, status: 422
     end
   end
 

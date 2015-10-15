@@ -39,4 +39,21 @@ class ReviewTest < ActionDispatch::IntegrationTest
     review = json(response.body)
     assert_equal 'Abysmal', review[:data][:attributes][:body]
   end
+
+  test "creating a review requires stars, author and body" do
+    post "/products/#{@product.id}/reviews/",
+         { review: { stars: nil,
+                     author: nil,
+                     body: nil } }.to_json,
+         { 'Accept' => Mime::JSON, 'Content-Type' => Mime::JSON.to_s }
+
+    assert_equal 422, response.status
+    assert_equal Mime::JSON, response.content_type
+
+
+    errors = json(response.body)
+    assert_equal "can't be blank", errors[:stars][0]
+    assert_equal "can't be blank", errors[:author][0]
+    assert_equal "can't be blank", errors[:body][0]
+  end
 end
