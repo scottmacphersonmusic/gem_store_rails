@@ -75,4 +75,11 @@ class ReviewTest < ActionDispatch::IntegrationTest
     errors = json(response.body)
     assert_equal "can't be blank", errors[:stars][0]
   end
+
+  test "deletes existing review" do
+    review = reviews(:ruby_1)
+    delete "/products/#{review.product_id}/reviews/#{review.id}"
+    assert_equal 204, response.status
+    assert_equal 1, Product.find(review.product_id).reviews.count
+  end
 end
