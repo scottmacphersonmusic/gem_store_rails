@@ -1,0 +1,11 @@
+(function() {
+  var app = angular.module('gemStore', []);
+
+  app.controller('StoreController', ['$http', function($http){
+    var store = this;
+    store.products = [];
+    $http.get("<%= asset_path 'gemstore_app/store-products.json' %>").success(function(data){
+      store.products = data;
+    });
+  }]);
+})();

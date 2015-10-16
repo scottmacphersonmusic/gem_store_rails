@@ -1,14 +1,16 @@
 <!DOCTYPE html>
 <html ng-app="gemStore">
 <head>
-  <title>Gem-Store Rails</title>
+  <title>heGEMon</title>
   <%= stylesheet_link_tag    'application', media: 'all' %>
   <%= javascript_include_tag 'application' %>
   <%= csrf_meta_tags %>
 </head>
-<body ng-controller="StoreController as store">
-  <div id="container">
+<body>
+  <div id="container" ng-controller="StoreController as store" ng-init="index()">
+
     <%= yield %>
+
   </div>
 </body>
 </html>
