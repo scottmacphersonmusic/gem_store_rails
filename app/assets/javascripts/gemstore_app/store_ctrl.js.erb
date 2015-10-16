@@ -1,11 +1,23 @@
 (function() {
   var app = angular.module('gemStore', []);
 
-  app.controller('StoreController', ['$http', function($http){
-    var store = this;
-    store.products = [];
-    $http.get("<%= asset_path 'gemstore_app/store-products.json' %>").success(function(data){
-      store.products = data;
-    });
+  app.controller('StoreController', ['$scope', '$http', function($scope, $http){
+    $scope.products = [];
+    $scope.errors = [];
+
+    $scope.index = function() {
+      $http.get( "/products" )
+        .success(function(data) {
+
+          console.log(data.data);
+
+          $scope.products = data.data;
+        })
+        .error(function(data) {
+          $scope.errors.push(data);
+          console.log(data);
+          console.log(status);
+        });
+    };
   }]);
 })();
