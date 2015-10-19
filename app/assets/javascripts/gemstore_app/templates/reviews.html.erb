@@ -1,9 +1,9 @@
 <!--  Review Tab's Content  -->
-<div ng-show="tab.isSet(3)">
+<div ng-show="tab.isSet(3)" ng-controller="ReviewController as reviewCtrl">
   <!--  Product Reviews List -->
   <ul>
     <h4>Reviews</h4>
-    <li ng-repeat="review in product.reviews">
+    <li ng-repeat="review in reviews"  ng-init="index()">
       <blockquote>
         <strong>{{review.stars}} Stars</strong>
         {{review.body}}
@@ -13,8 +13,9 @@
   </ul>
 
   <!--  Review Form -->
-  <form name="reviewForm" ng-controller="ReviewController as reviewCtrl"
-        ng-submit="reviewForm.$valid && reviewCtrl.addReview(product)" novalidate>
+  <form name="reviewForm" ng-submit="reviewForm.$valid &&
+                                     reviewCtrl.addReview(product)"
+        novalidate>
 
     <!--  Live Preview -->
     <blockquote >

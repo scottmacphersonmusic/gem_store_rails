@@ -1,14 +1,20 @@
 (function() {
   var app = GemStoreInstance;
 
-  app.controller("ReviewController", function(){
+  app.controller('ReviewController', ['$scope', '$http', function($scope, $http) {
+    $scope.reviews = [];
+    $scope.errors = [];
 
-    this.review = {};
-
-    this.addReview = function(product){
-      this.review.createdOn = Date.now();
-      product.reviews.push(this.review);
-      this.review = {};
+    $scope.index = function() {
+      $http.get( "/products/" + product.id + '/reviews')
+        .success(function(data) {
+          console.log("data: " + JSON.stringify(data));
+          $scope.reviews = data.data;
+        })
+        .error(function(data) {
+          $scope.errors.push(data);
+          console.log(data);
+        });
     };
-  });
+  }]);
 })();

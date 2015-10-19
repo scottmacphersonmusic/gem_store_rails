@@ -9,7 +9,7 @@
 
   <!-- New Product Form -->
 
-  <button data-ng-click="product.new = true">New Product</button>
+  <button class="btn" data-ng-click="product.new = true">New Product</button>
   <form name="newProductForm" ng-show="product.new">
 
     <hr/>
@@ -59,8 +59,8 @@
     <product-tabs></product-tabs>
 
     <!-- Edit Product  -->
-    <button data-ng-click="product.editing = true">Edit</button>
-    <button data-ng-click="product.deleteConfirm = true" data-ng-hide="product.deleteConfirm">Delete</button>
+    <button class="btn" data-ng-click="product.editing = true">Edit</button>
+    <button class="btn" data-ng-click="product.deleteConfirm = true" data-ng-hide="product.deleteConfirm">Delete</button>
 
     <form name="editProductForm" data-ng-show="product.editing" novalidate>
 
