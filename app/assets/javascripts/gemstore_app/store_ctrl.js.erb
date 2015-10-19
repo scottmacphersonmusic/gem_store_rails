@@ -1,0 +1,61 @@
+(function() {
+  var app = GemStoreInstance;
+
+  app.controller('StoreController', ['$scope', '$http', function($scope, $http){
+    $scope.products = [];
+    $scope.errors = [];
+
+    $scope.index = function() {
+      $http.get("/products")
+        .success(function(data) {
+          $scope.products = data.data;
+        })
+        .error(function(data) {
+          $scope.errors.push(data);
+          console.log(data);
+          console.log(status);
+        });
+    };
+
+    $scope.create = function(product){
+      $http.post("/products", { product })
+        .success(function(data) {
+          product.new = false;
+          $scope.products.unshift(data.data);
+          $scope.newProduct = {};
+        })
+        .error(function(data, status) {
+          $scope.errors = (data);
+          console.log(data);
+          console.log(status);
+        });
+    };
+
+    $scope.update = function(product){
+      console.log(product);
+      $http.patch( "/products/" + product.id,
+                   { product })
+        .success(function(data) {
+
+          product.editing = false;
+      })
+        .error(function(data, status) {
+          $scope.errors = data;
+      });
+    };
+
+    $scope.destroy = function(product){
+      $http({
+        method: 'DELETE',
+        url: "/products/" + product.id
+      })
+        .success(function(data) {
+          product.deleteConfirm = false;
+          $scope.products.splice($scope.products.indexOf(product), 1);
+      })
+        .error(function(data, status) {
+          $scope.errors.push(data);
+        });
+    };
+  }]);
+})();

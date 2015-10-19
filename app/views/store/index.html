@@ -1,20 +1,107 @@
 <!--  Store Header  -->
 <header>
-  <h1 class="text-center">Flatlander Crafted Gems</h1>
+  <h1 class="text-center">heGEMon</h1>
   <h2 class="text-center">- an Angular store -</h2>
 </header>
 
 <!--  Products Container  -->
 <div class="list-group">
+
+  <!-- New Product Form -->
+
+  <button class="btn" data-ng-click="product.new = true">New Product</button>
+  <form name="newProductForm" ng-show="product.new">
+
+    <hr/>
+
+    <label for="name">Name<input type="text" name="name"
+                                 ng-model="newProduct.name"></label>
+
+    <label for="price">Price<input label="price" value="price"
+                                   type="text" name="price"
+                                   ng-model="newProduct.price"></label>
+
+    <label for="description">Description<input type="text" name="description"
+                                               ng-model="newProduct.description"></label>
+
+    <br/>
+
+    <label for="rarity">Rarity<input label="rarity" value="rarity"
+                                     type="text" name="rarity"
+                                     ng-model="newProduct.rarity"></label>
+
+    <label for="color">Color<input label="color" value="color"
+                                    type="text" name="color"
+                                    ng-model="newProduct.color"></label>
+
+    <label for="faces">Faces<input label="faces" value="faces"
+                                    type="text" name="faces"
+                                    ng-model="newProduct.faces"></label>
+
+
+    <button ng-click="create(newProduct)">Create Product</button>
+    <button data-ng-click="product.new = false">Cancel</button>
+
+    <hr/>
+
+  </form>
+
   <!--  Product Container  -->
-  <div class="list-group-item" ng-repeat="product in store.products">
-    <h3>{{product.name}} <em class="pull-right">{{product.price | currency}}</em></h3>
+  <div class="list-group-item" ng-repeat="product in products">
+    <h3>{{product.attributes.name}} <em class="pull-right">{{product.attributes.price
+    | currency}}</em>
+    </h3>
 
     <!-- Image Gallery  -->
     <product-gallery></product-gallery>
 
     <!-- Product Tabs  -->
     <product-tabs></product-tabs>
+
+    <!-- Edit Product  -->
+    <button class="btn" data-ng-click="product.editing = true">Edit</button>
+    <button class="btn" data-ng-click="product.deleteConfirm = true" data-ng-hide="product.deleteConfirm">Delete</button>
+
+    <form name="editProductForm" data-ng-show="product.editing" novalidate>
+
+
+      <hr/>
+
+      <label for="name">Name<input type="text" name="name"
+                                   data-ng-model="product.name"></label>
+
+      <label for="price">Price<input label="price" value="price"
+                                     type="text" name="price"
+                                     data-ng-model="product.price"></label>
+
+      <label for="description">Description<input type="text" name="description"
+                                                 data-ng-model="product.description"></label>
+
+      <br/>
+
+      <label for="rarity">Rarity<input label="rarity" value="rarity"
+                                       type="text" name="rarity"
+                                       data-ng-model="product.rarity"></label>
+
+      <label for="color">Color<input label="color" value="color"
+                                     type="text" name="color"
+                                     data-ng-model="product.color"></label>
+
+      <label for="faces">Faces<input label="faces" value="faces"
+                                     type="text" name="faces"
+                                     data-ng-model="product.faces"></label>
+
+
+      <button data-ng-click="update(product)">Update Product</button>
+      <button data-ng-click="product.editing = false">Cancel</button>
+      <hr/>
+
+    </form>
+
+    <div data-ng-show="product.deleteConfirm">
+      <button data-ng-click="destroy(product)">Confirm</button>
+      <button data-ng-click="product.deleteConfirm = false">Cancel</button>
+    </div>
 
   </div>
 </div>
