@@ -18,10 +18,9 @@
     };
 
     $scope.create = function(product){
-      console.log(product)
       $http.post("/products", { product })
         .success(function(data) {
-          $scope.products.unshift(data.product);
+          $scope.products.unshift(data.data);
           $scope.newProduct = {};
         })
         .error(function(data, status) {

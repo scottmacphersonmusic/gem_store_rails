@@ -6,8 +6,6 @@
 (function() {
   window.GemStoreInstance = angular.module('gemStore', ['store-directives']);
 
-  console.log('pure imagination');
-
   GemStoreInstance.config(['$httpProvider', function($httpProvider){
     $httpProvider.defaults.headers.common['X-CSRF-Token'] =
       document.querySelector('meta[name=csrf-token]').content;
