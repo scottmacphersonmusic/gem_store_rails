@@ -6,9 +6,48 @@
 
 <!--  Products Container  -->
 <div class="list-group">
+
+  <!-- New Product Form -->
+  <section id="newProductForm">
+
+    <hr/>
+
+    <label for="name">Name<input type="text" name="name"
+                                 ng-model="newProduct.name"></label>
+
+    <label for="price">Price<input label="price" value="price"
+                                   type="text" name="price"
+                                   ng-model="newProduct.price"></label>
+
+    <label for="description">Description<input type="text" name="description"
+                                               ng-model="newProduct.description"></label>
+
+    <br/>
+
+    <label for="rarity">Rarity<input label="rarity" value="rarity"
+                                     type="text" name="rarity"
+                                     ng-model="newProduct.rarity"></label>
+
+    <label for="color">Color<input label="color" value="color"
+                                    type="text" name="color"
+                                    ng-model="newProduct.color"></label>
+
+    <label for="faces">Faces<input label="faces" value="faces"
+                                    type="text" name="faces"
+                                    ng-model="newProduct.faces"></label>
+
+
+    <button ng-click="create(newProduct)">Create Product</button>
+
+    <hr/>
+
+  </section>
+
   <!--  Product Container  -->
   <div class="list-group-item" ng-repeat="product in products">
-    <h3>{{product.attributes.name}} <em class="pull-right">{{product.attributes.price | currency}}</em></h3>
+    <h3>{{product.attributes.name}} <em class="pull-right">{{product.attributes.price
+    | currency}}</em>
+    </h3>
 
     <!-- Image Gallery  -->
     <product-gallery></product-gallery>

@@ -4,9 +4,11 @@
 //= require gemstore_app/review_ctrl
 
 (function() {
-  var app = angular.module('gemStore', ['store-directives']);
+  window.GemStoreInstance = angular.module('gemStore', ['store-directives']);
 
-  app.config(['$httpProvider', function($httpProvider){
+  console.log('pure imagination');
+
+  GemStoreInstance.config(['$httpProvider', function($httpProvider){
     $httpProvider.defaults.headers.common['X-CSRF-Token'] =
       document.querySelector('meta[name=csrf-token]').content;
     $httpProvider.defaults.headers.common.Accept =

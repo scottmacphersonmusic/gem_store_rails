@@ -1,20 +1,31 @@
 (function() {
-  var app = angular.module('gemStore', []);
+  var app = GemStoreInstance;
 
   app.controller('StoreController', ['$scope', '$http', function($scope, $http){
     $scope.products = [];
     $scope.errors = [];
 
     $scope.index = function() {
-      $http.get( "/products" )
+      $http.get("/products")
         .success(function(data) {
-
-          console.log(data.data);
-
           $scope.products = data.data;
         })
         .error(function(data) {
           $scope.errors.push(data);
+          console.log(data);
+          console.log(status);
+        });
+    };
+
+    $scope.create = function(product){
+      console.log(product)
+      $http.post("/products", { product })
+        .success(function(data) {
+          $scope.products.unshift(data.product);
+          $scope.newProduct = {};
+        })
+        .error(function(data, status) {
+          $scope.errors = (data);
           console.log(data);
           console.log(status);
         });
