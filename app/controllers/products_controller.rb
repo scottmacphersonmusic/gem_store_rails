@@ -1,5 +1,6 @@
 class ProductsController < ApplicationController
   before_action :set_product, only: [:show, :update, :destroy]
+  before_action :authenticate, except: [:index, :show]
 
   def index
     products = Product.all
@@ -47,5 +48,11 @@ class ProductsController < ApplicationController
 
   def set_product
     @product = Product.find(params[:id])
+  end
+
+  def authenticate
+    authenticate_or_request_with_http_basic do |username, password|
+      User.authenticate(username, password)
+    end
   end
 end
