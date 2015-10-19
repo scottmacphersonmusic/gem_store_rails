@@ -43,5 +43,19 @@
           $scope.errors = data;
       });
     };
+
+    $scope.destroy = function(product){
+      $http({
+        method: 'DELETE',
+        url: "/products/" + product.id
+      })
+        .success(function(data) {
+          product.deleteConfirm = false;
+          $scope.products.splice($scope.products.indexOf(product), 1);
+      })
+        .error(function(data, status) {
+          $scope.errors.push(data);
+        });
+    };
   }]);
 })();
